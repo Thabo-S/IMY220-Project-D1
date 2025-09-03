@@ -18,6 +18,7 @@
 //     console.log(`App listening at http://localhost:${port}`)
 // })
 
+//working
 var express = require("express");
 var path = require("path");
 var app = express();
@@ -34,3 +35,52 @@ app.get('/{*any}', function (req, res) {
 app.listen(port, function () {
   console.log("App listening at http://localhost:".concat(port));
 });
+
+// backend/server.js NOT WORKING
+// const express = require('express');
+// // const cors = require('cors');
+// const path = require('path');
+// const app = express();
+// const PORT = 5000;
+
+// // Middleware
+// // app.use(cors());
+// app.use(express.json());
+
+// // Serve static files from frontend in production
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, '../frontend/public')));
+// }
+
+// // Stubbed authentication endpoints
+// app.post('/api/auth/signup', (req, res) => {
+//     console.log('Signup attempt:', req.body);
+//     res.json({
+//         success: true,
+//         message: 'User created successfully',
+//         user: {
+//             id: Math.random().toString(36).substr(2, 9),
+//             name: req.body.name,
+//             email: req.body.email
+//         },
+//         token: 'stub-jwt-token-' + Date.now()
+//     });
+// });
+
+// app.post('/api/auth/login', (req, res) => {
+//     console.log('Login attempt:', req.body);
+//     res.json({
+//         success: true,
+//         message: 'Login successful',
+//         user: {
+//             id: 'user123',
+//             name: 'Test User',
+//             email: req.body.email
+//         },
+//         token: 'stub-jwt-token-' + Date.now()
+//     });
+// });
+
+// app.listen(PORT, () => {
+//     console.log(`App listening at http://localhost:${PORT}`);
+// });
