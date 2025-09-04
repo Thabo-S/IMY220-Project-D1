@@ -1,3 +1,4 @@
+// 56_Seripe_D1
 //working
 const express = require("express");
 const path = require("path");
@@ -146,5 +147,5 @@ app.listen(port, () => {
     console.log(`API endpoints available:`);
     console.log(`- POST http://localhost:${port}/api/auth/login`);
     console.log(`- POST http://localhost:${port}/api/auth/signup`);
-    console.log(`- GET  http://localhost:${port}/api/test`);
+    // console.log(`- GET  http://localhost:${port}/api/test`);
 });
