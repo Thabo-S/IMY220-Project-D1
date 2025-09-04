@@ -1,38 +1,3 @@
-// import React, { useState } from "react";
-
-
-// const SplashNav = ({ setActiveForm }) => {
-
-//     // const [activeForm, setActiveForm] = useState(null);
-
-//     return (
-//         <nav className="SplashNav">
-
-//             <header className="SplashNav">
-//                 <div className="SplashNav-brand">
-//                     <img src="/assets/images/logo.png" alt="Repo River Logo" className="splash-logo" />
-//                 </div>
-//                 <div className="SplashNav-links">
-//                     <button
-//                         className="nav-link login-btn"
-//                         onClick={() => setActiveForm(activeForm === 'login' ? null : 'login')}
-//                     >
-//                         Login
-//                     </button>
-//                     <button
-//                         className="nav-link signup-btn"
-//                         onClick={() => setActiveForm(activeForm === 'signup' ? null : 'signup')}
-//                     >
-//                         Sign Up
-//                     </button>
-//                 </div>
-//             </header>
-//         </nav>
-//     );
-// };
-
-// export default SplashNav;
-
 import React from "react";
 
 const SplashNav = ({ setActiveForm }) => {

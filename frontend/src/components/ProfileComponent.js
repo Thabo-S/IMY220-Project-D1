@@ -1,4 +1,3 @@
-// components/ProfileComponent.js
 import React, { useState } from "react";
 import EditProfileForm from "./EditProfileForm";
 

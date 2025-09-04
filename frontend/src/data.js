@@ -1,4 +1,4 @@
-export const users = [
+const users = [
     {
         id: 1,
         name: "John Developer",
@@ -8,10 +8,11 @@ export const users = [
         birthday: "1990-05-15",
         gender: "Male",
         work: "Software Engineer at TechCorp",
-        phone: "+1-555-0123",
+        phone: "+27 11 555 0123",
         projectsCount: 12,
         followers: 245,
-        following: 87
+        following: 87,
+        password: "password123"
     },
     {
         id: 2,
@@ -22,10 +23,11 @@ export const users = [
         birthday: "1992-11-22",
         gender: "Female",
         work: "UI/UX Designer at DesignHub",
-        phone: "+1-555-0124",
+        phone: "+27 21 555 0124",
         projectsCount: 8,
         followers: 178,
-        following: 94
+        following: 94,
+        password: "password123"
     },
     {
         id: 3,
@@ -36,14 +38,30 @@ export const users = [
         birthday: "1988-03-08",
         gender: "Male",
         work: "Lead Developer at DataSystems",
-        phone: "+1-555-0125",
+        phone: "+27 12 555 0125",
         projectsCount: 15,
         followers: 312,
-        following: 102
+        following: 102,
+        password: "password123"
+    },
+    {
+        id: 4,
+        name: "Thabo",
+        email: "u24928209@tuks.co.za",
+        avatar: "/assets/images/avatars/thabo.png",
+        bio: "Software engineering student and aspiring developer",
+        birthday: "2000-08-20",
+        gender: "Male",
+        work: "Student at University of Pretoria",
+        phone: "+27 12 345 6789",
+        projectsCount: 3,
+        followers: 45,
+        following: 32,
+        password: "qwerty123"
     }
 ];
 
-export const projects = [
+const projects = [
     {
         id: 1,
         name: "CloudSync App",
@@ -125,10 +143,73 @@ export const projects = [
             { id: 8, user: users[0], text: "Set up base editor", time: "2025/07/16 10:30" },
             { id: 9, user: users[1], text: "Added collaboration features", time: "2025/07/17 11:15" }
         ]
+    },
+    {
+        id: 5,
+        name: "Student Portal App",
+        description: "A mobile application for university students to access course materials, grades, and campus events.",
+        hashtag: "#EducationTech",
+        lastActivity: "User added authentication module at 2025/08/10 02:30 PMST",
+        image: "/assets/images/projects/student-portal.png",
+        creator: users[3], 
+        createdAt: "2025/08/01",
+        downloads: 87,
+        isPublic: true,
+        files: [
+            { id: 10, name: "app.js", created: "01/08/2025 10:00" },
+            { id: 11, name: "database.js", created: "01/08/2025 10:00" },
+            { id: 12, name: "styles.css", created: "01/08/2025 10:00" }
+        ],
+        messages: [
+            { id: 10, user: users[3], text: "Initial project setup", time: "2025/08/01 09:00" },
+            { id: 11, user: users[3], text: "Added user authentication", time: "2025/08/05 14:20" }
+        ]
+    },
+    {
+        id: 6,
+        name: "Campus Navigation System",
+        description: "GPS-based navigation system for university campuses with interactive maps and building information.",
+        hashtag: "#CampusTech",
+        lastActivity: "User optimized map rendering at 2025/09/15 11:45 AMST",
+        image: "/assets/images/projects/campus-nav.png",
+        creator: users[3], 
+        createdAt: "2025/09/01",
+        downloads: 124,
+        isPublic: true,
+        files: [
+            { id: 13, name: "map.js", created: "01/08/2025 10:00" },
+            { id: 14, name: "navigation.js", created: "01/08/2025 10:00" },
+            { id: 15, name: "ui.js", created: "01/08/2025 10:00" }
+        ],
+        messages: [
+            { id: 12, user: users[3], text: "Started campus mapping project", time: "2025/09/01 10:30" },
+            { id: 13, user: users[1], text: "Great UI design!", time: "2025/09/03 16:45" }
+        ]
+    },
+    {
+        id: 7,
+        name: "Study Group Finder",
+        description: "Platform for students to find and create study groups based on courses and availability.",
+        hashtag: "#StudySmart",
+        lastActivity: "User implemented real-time chat at 2025/10/05 04:20 PMST",
+        image: "/assets/images/projects/study-group.png",
+        creator: users[3], 
+        createdAt: "2025/10/01",
+        downloads: 156,
+        isPublic: true,
+        files: [
+            { id: 16, name: "chat.js", created: "01/08/2025 10:00" },
+            { id: 17, name: "matching.js", created: "01/08/2025 10:00" },
+            { id: 18, name: "profile.js", created: "01/08/2025 10:00" }
+        ],
+        messages: [
+            { id: 14, user: users[3], text: "Study group matching algorithm implemented", time: "2025/10/02 11:15" },
+            { id: 15, user: users[2], text: "Nice work on the real-time features", time: "2025/10/04 13:30" }
+        ]
     }
 ];
 
-export const localActivity = [
+const localActivity = [
     {
         id: 1,
         project: projects[0],
@@ -152,7 +233,7 @@ export const localActivity = [
     }
 ];
 
-export const globalActivity = [
+const globalActivity = [
     {
         id: 1,
         project: projects[3],
@@ -176,31 +257,32 @@ export const globalActivity = [
     }
 ];
 
-export const currentUser = users[0];
+const currentUser = users[0];
 
-export const friends = [
+const friends = [
     users[1],
     users[2],
     {
-        id: 4,
+        id: 5,
         name: "Alex Tech",
         avatar: "/assets/images/avatars/alex.png",
         bio: "Mobile developer and open source contributor",
         projectsCount: 9,
-        followers: 127
+        followers: 127,
+        phone: "+27 31 555 0126"
     },
     {
-        id: 5,
+        id: 6,
         name: "Taylor Code",
         avatar: "/assets/images/avatars/taylor.png",
         bio: "DevOps engineer and cloud architect",
         projectsCount: 6,
-        followers: 89
+        followers: 89,
+        phone: "+27 16 555 0127"
     }
 ];
 
-export const userProjects = [
-
+const userProjects = [
     {
         id: 5,
         name: "SecurityScanner",
@@ -213,3 +295,13 @@ export const userProjects = [
         ]
     }
 ];
+
+module.exports = {
+    users,
+    projects,
+    localActivity,
+    globalActivity,
+    currentUser,
+    friends,
+    userProjects
+};

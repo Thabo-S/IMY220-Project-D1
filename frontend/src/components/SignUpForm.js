@@ -1,4 +1,3 @@
-// components/SignUpForm.js
 import React, { useState } from "react";
 
 const SignUpForm = ({ onSignUp }) => {
@@ -9,6 +8,7 @@ const SignUpForm = ({ onSignUp }) => {
         confirmPassword: ""
     });
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -55,11 +55,21 @@ const SignUpForm = ({ onSignUp }) => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            onSignUp(userData);
-            setUserData({ name: "", email: "", password: "", confirmPassword: "" });
+            setIsLoading(true);
+            try {
+                await onSignUp(userData);
+                // Clear form only on successful signup
+                setUserData({ name: "", email: "", password: "", confirmPassword: "" });
+            } catch (error) {
+                // Handle error from onSignUp
+                console.error("Signup error:", error);
+                setErrors(prev => ({ ...prev, submit: error.message || "Signup failed" }));
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -77,6 +87,7 @@ const SignUpForm = ({ onSignUp }) => {
                     onChange={handleChange}
                     required
                     className={errors.name ? "error" : ""}
+                    disabled={isLoading}
                 />
                 {errors.name && <span className="error-text">{errors.name}</span>}
             </div>
@@ -91,6 +102,7 @@ const SignUpForm = ({ onSignUp }) => {
                     onChange={handleChange}
                     required
                     className={errors.email ? "error" : ""}
+                    disabled={isLoading}
                 />
                 {errors.email && <span className="error-text">{errors.email}</span>}
             </div>
@@ -105,6 +117,7 @@ const SignUpForm = ({ onSignUp }) => {
                     onChange={handleChange}
                     required
                     className={errors.password ? "error" : ""}
+                    disabled={isLoading}
                 />
                 {errors.password && <span className="error-text">{errors.password}</span>}
             </div>
@@ -119,11 +132,16 @@ const SignUpForm = ({ onSignUp }) => {
                     onChange={handleChange}
                     required
                     className={errors.confirmPassword ? "error" : ""}
+                    disabled={isLoading}
                 />
                 {errors.confirmPassword && <span className="error-text">{errors.confirmPassword}</span>}
             </div>
             
-            <button type="submit">Sign Up</button>
+            {errors.submit && <span className="error-text">{errors.submit}</span>}
+            
+            <button type="submit" disabled={isLoading}>
+                {isLoading ? 'Creating Account...' : 'Sign Up'}
+            </button>
         </form>
     );
 };

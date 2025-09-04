@@ -20,7 +20,7 @@ const CreateProjectForm = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newProject = {
-      id: Date.now(), // Temporary ID for demo purposes
+      id: Date.now(), 
       ...formData,
       creator: currentUser,
       createdAt: new Date().toISOString().split("T")[0],
@@ -31,15 +31,14 @@ const CreateProjectForm = ({ onSubmit }) => {
       lastActivity: `User created project at ${new Date().toLocaleString("en-US", { timeZone: "Africa/Johannesburg" })}`,
     };
 
-    // Call the onSubmit prop if provided
     if (onSubmit) {
       onSubmit(newProject);
     }
 
-    // In a real app, this would send a POST request to the backend
+    
     console.log("New project created:", newProject);
 
-    // Reset form
+  
     setFormData({ name: "", description: "", hashtag: "", isPublic: true });
   };
 

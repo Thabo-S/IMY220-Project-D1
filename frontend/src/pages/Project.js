@@ -3,16 +3,33 @@ import { useParams } from "react-router-dom";
 import ProjectFiles from "../components/ProjectFiles";
 import ProjectMessages from "../components/ProjectMessages";
 import EditProjectForm from "../components/EditProjectForm";
-import TeamMembers from "../components/TeamMembers"; // New component
-import { projects, currentUser, users } from "../data";
+import TeamMembers from "../components/TeamMembers";
+import { projects, users } from "../data";
 import Navbar from "../components/Navbar";
-import  Footer from "../components/Footer";
+import Footer from "../components/Footer";
 import PalmTree from "../components/PalmTree";
 
 const Project = () => {
     const { id } = useParams();
     const [project, setProject] = useState(projects.find(p => p.id === parseInt(id)));
     const [isEditing, setIsEditing] = useState(false);
+
+    // Get current user from localStorage or use first user as default
+    const getCurrentUser = () => {
+        const storedUserData = localStorage.getItem('user'); 
+        if (storedUserData) {
+            try {
+                const parsedData = JSON.parse(storedUserData);
+                return parsedData; 
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+            }
+        }
+        // Return first user as default if no one is logged in
+        return users.length > 0 ? users[0] : null;
+    };
+
+    const currentUser = getCurrentUser();
 
     // Handle case where project is not found
     if (!project) {
@@ -35,7 +52,7 @@ const Project = () => {
         console.log("Project updated:", updatedProject);
     };
 
-    const isCurrentUserCreator = project.creator.id === currentUser.id;
+    const isCurrentUserCreator = currentUser && project.creator.id === currentUser.id;
 
     if (isEditing) {
         return (

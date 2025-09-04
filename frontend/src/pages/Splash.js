@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import SignUpForm from "../components/SignUpForm";
 import SplashNav from "../components/SplashNav";
@@ -9,15 +9,61 @@ import  Footer from "../components/Footer";
 
 const Splash = () => {
     const [activeForm, setActiveForm] = useState(null);
+    const navigate = useNavigate();
 
-    const handleLogin = (credentials) => {
-        console.log("Login attempt with:", credentials);
-        // Stub for login functionality
+    const handleLogin = async (credentials) => {
+        try{
+            const response = await fetch(`http://localhost:5000/api/auth/login`,{
+                method: `POST`,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body:JSON.stringify(credentials),
+            });
+            const data = await response.json();
+
+            if(data.success){
+                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('token', data.token);
+
+                console.log('Login successful:',data);
+                setActiveForm(null);
+                navigate('/home');
+            }else{
+                console.log('Login failed: ' + data.message);
+            }
+        }catch(error){
+            console.log('Login error:',error);
+            
+        }
     };
+    
 
-    const handleSignUp = (userData) => {
-        console.log("Sign up with:", userData);
-        // Stub for sign up functionality
+    const handleSignUp = async (userData) => {
+        try{
+            const response = await fetch(`http://localhost:5000/api/auth/signup`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            const data = await response.json();
+
+            if(data.success){
+                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('token', data.token);
+
+                console.log('Signup successful:', data);
+                setActiveForm(null);
+                navigate('/home');
+            }else{
+                console.log('Signup failed: ' + data.message);
+            }
+        }catch(error){
+            console.error('Signup error:',error);
+        }
     };
 
     return (

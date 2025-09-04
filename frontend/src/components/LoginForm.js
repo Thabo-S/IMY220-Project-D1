@@ -1,4 +1,3 @@
-// components/LoginForm.js
 import React, { useState } from "react";
 
 const LoginForm = ({ onLogin }) => {
@@ -7,6 +6,7 @@ const LoginForm = ({ onLogin }) => {
         password: ""
     });
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -36,11 +36,13 @@ const LoginForm = ({ onLogin }) => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            onLogin(credentials);
-            setCredentials({ email: "", password: "" });
+            setIsLoading(true);
+            await onLogin(credentials);
+            setIsLoading(false);
+            // setCredentials({ email: "", password: "" });
         }
     };
 
@@ -72,11 +74,14 @@ const LoginForm = ({ onLogin }) => {
                     onChange={handleChange}
                     required
                     className={errors.password ? "error" : ""}
+                    disabled={isLoading}
                 />
                 {errors.password && <span className="error-text">{errors.password}</span>}
             </div>
             
-            <button type="submit">Login</button>
+            <button type="submit" disabled={isLoading}>
+                {isLoading ? 'Logging in...' : 'Login'}
+            </button>
         </form>
     );
 };

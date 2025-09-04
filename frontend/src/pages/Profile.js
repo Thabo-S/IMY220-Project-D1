@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { users, currentUser, projects, friends } from "../data";
+import { users, projects, friends } from "../data";
 import ProfileComponent from "../components/ProfileComponent";
 import ProjectList from "../components/ProjectList";
 import FriendList from "../components/FriendList";
@@ -11,20 +11,92 @@ import PalmTree from "../components/PalmTree";
 
 const Profile = () => {
   const { id } = useParams();
-  const user = id ? users.find((u) => u.id === parseInt(id)) : currentUser;
-  const [userProjects, setUserProjects] = useState(
-    projects.filter(project => project.creator.id === user.id)
-  );
+  const [user, setUser] = useState(null);
+  const [userProjects, setUserProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // Get the logged in user from localStorage
+        const storedUserData = localStorage.getItem('user');
+        let storedUser = null;
+        
+        if (storedUserData) {
+          try {
+            storedUser = JSON.parse(storedUserData);
+            console.log("Stored user from localStorage:", storedUser);
+          } catch (error) {
+            console.error('Error parsing user data:', error);
+          }
+        }
+        
+        setLoggedInUser(storedUser);
+
+        let userId = id;
+        
+        // If no ID in URL params and user is logged in, use their ID
+        if (!userId && storedUser) {
+          userId = storedUser.id;
+        }
+        
+        // If no ID and no logged in user, show a random user (for demo)
+        if (!userId && !storedUser) {
+          const randomIndex = Math.floor(Math.random() * users.length);
+          const randomUser = users[randomIndex];
+          userId = randomUser.id;
+        }
+
+        console.log("User ID to display:", userId);
+
+        if (!userId) {
+          setIsLoading(false);
+          return;
+        }
+
+        const userData = users.find(u => u.id === parseInt(userId));
+        console.log("Found user data:", userData);
+
+        if (userData) {
+          setUser(userData);
+          // Filter projects for this user
+          const userProjs = projects.filter(project => {
+            // Handle both project.creator.id and project.creator object
+            const creatorId = project.creator.id || project.creator;
+            console.log("Project creator ID:", creatorId, "User ID:", userData.id);
+            return creatorId === userData.id;
+          });
+          console.log("Filtered projects:", userProjs);
+          setUserProjects(userProjs);
+        } else {
+          console.error('User not found in local data');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (!user) {
     return <div>User not found</div>;
   }
 
   const handleProjectCreate = (newProject) => {
-    // Add the new project to the user's projects list
     setUserProjects(prev => [...prev, newProject]);
     console.log("Project created:", newProject);
   };
+
+  // Check if the profile being viewed belongs to the logged in user
+  const isOwnProfile = loggedInUser && user.id === loggedInUser.id;
 
   return (
     <>
@@ -35,30 +107,28 @@ const Profile = () => {
 
         {/* Projects List */}
         <section className="profile-projects">
-          <h2>{user.id === currentUser.id ? "My Projects" : `${user.name}'s Projects`}</h2>
+          <h2>{isOwnProfile ? "My Projects" : `${user.name}'s Projects`}</h2>
           <ProjectList projects={userProjects} />
         </section>
 
-        {/* Friends List */}
-        {user.id === currentUser.id && (
-          <section className="profile-friends">
-            <div className="friend-heading">
-              <h2>My Friends</h2>
-            </div>
-            <FriendList friends={friends} />
-          </section>
-        )}
+        {/* Friends List - Show for all profiles, not just own profile */}
+        <section className="profile-friends">
+          <div className="friend-heading">
+            <h2>{isOwnProfile ? "My Friends" : `${user.name}'s Friends`}</h2>
+          </div>
+          <FriendList friends={friends} />
+        </section>
 
-        {/* Create Project Form */}
-        {user.id === currentUser.id && (
+        {/* Create Project Form - Only show for the logged in user's own profile */}
+        {isOwnProfile && (
           <section className="create-project">
             <h2>Create a New Project</h2>
             <CreateProjectForm onSubmit={handleProjectCreate} />
           </section>
         )}
       </div>
-      <PalmTree/>
-      <Footer/>
+      <PalmTree />
+      <Footer />
     </>
   );
 };
