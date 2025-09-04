@@ -64,6 +64,7 @@ const Discover = () => {
                             <div className="discover-count">
                                 Found {publicProjects.length} public project(s)
                             </div>
+                            
                             <ProjectList projects={publicProjects} />
                         </>
                     ) : (

@@ -11,7 +11,6 @@ import PalmTree from "../components/PalmTree";
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");
     
-    // Debug: Check what's actually in localStorage
     useEffect(() => {
         const responseData = localStorage.getItem("currentUser");
         console.log("Raw localStorage data:", responseData);
@@ -20,7 +19,6 @@ const Home = () => {
         }
     }, []);
 
-    // Get the full response data from localStorage
     const responseData = localStorage.getItem("user");
     const loginResponse = responseData ? JSON.parse(responseData) : null;
     

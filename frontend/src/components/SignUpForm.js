@@ -61,10 +61,10 @@ const SignUpForm = ({ onSignUp }) => {
             setIsLoading(true);
             try {
                 await onSignUp(userData);
-                // Clear form only on successful signup
+              
                 setUserData({ name: "", email: "", password: "", confirmPassword: "" });
             } catch (error) {
-                // Handle error from onSignUp
+                
                 console.error("Signup error:", error);
                 setErrors(prev => ({ ...prev, submit: error.message || "Signup failed" }));
             } finally {

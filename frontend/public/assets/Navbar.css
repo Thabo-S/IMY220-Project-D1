@@ -10,7 +10,6 @@
     background: transparent;
 }
 
-/* Add white bar above the navigation */
 .navbar::before {
     content: '';
     position: absolute;
@@ -39,7 +38,6 @@
     top: -19px; 
 }
 
-/* Trapezoids */
 .nav-link {
     text-decoration: none;
     font-size: 1rem;
@@ -54,6 +52,9 @@
     z-index: 2; 
     border: none;
     outline: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    
 }
 
 .nav-link + .nav-link {
@@ -69,7 +70,28 @@
     color: #fff;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     background-color: #1e6ea0;
     color: white;
+}
+
+.profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4fc3f7;
+    transition: all 0.3s ease;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 15px !important;
+}
+
+.profile-btn:hover .profile-img {
+    border-color: #29b6f6;
+    transform: scale(1.1);
 }

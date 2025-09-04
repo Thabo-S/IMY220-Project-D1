@@ -19,7 +19,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get the logged in user from localStorage
+        
         const storedUserData = localStorage.getItem('user');
         let storedUser = null;
         
@@ -36,12 +36,12 @@ const Profile = () => {
 
         let userId = id;
         
-        // If no ID in URL params and user is logged in, use their ID
+    
         if (!userId && storedUser) {
           userId = storedUser.id;
         }
         
-        // If no ID and no logged in user, show a random user (for demo)
+        
         if (!userId && !storedUser) {
           const randomIndex = Math.floor(Math.random() * users.length);
           const randomUser = users[randomIndex];
@@ -60,9 +60,9 @@ const Profile = () => {
 
         if (userData) {
           setUser(userData);
-          // Filter projects for this user
+         
           const userProjs = projects.filter(project => {
-            // Handle both project.creator.id and project.creator object
+           
             const creatorId = project.creator.id || project.creator;
             console.log("Project creator ID:", creatorId, "User ID:", userData.id);
             return creatorId === userData.id;
@@ -95,7 +95,6 @@ const Profile = () => {
     console.log("Project created:", newProject);
   };
 
-  // Check if the profile being viewed belongs to the logged in user
   const isOwnProfile = loggedInUser && user.id === loggedInUser.id;
 
   return (

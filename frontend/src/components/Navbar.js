@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        // Get user data from localStorage
+        const userData = localStorage.getItem("currentUser");
+        if (userData) {
+            setCurrentUser(JSON.parse(userData));
+        }
+    }, []);
 
     const handleLogout = () => {
         // Clear user data from localStorage
@@ -14,6 +23,9 @@ const Navbar = () => {
         // Redirect to splash page
         navigate("/");
     };
+
+    // Fallback avatar if user doesn't have one
+    const defaultAvatar = "https://api.dicebear.com/9.x/adventurer/svg?seed=Anonymous";
 
     return (
         <div className="navbarContainer">
@@ -41,12 +53,15 @@ const Navbar = () => {
                     </button>
                     <Link
                         to="/profile"
-                        className={`nav-link ${location.pathname === "/profile" ? "active" : ""}`}
+                        className={`nav-link profile-btn ${location.pathname === "/profile" ? "active" : ""}`}
                     >
                         <img
-                            src="/assets/images/user-avatar.jpg"
+                            src={currentUser?.avatar || defaultAvatar}
                             alt="Profile"
                             className="profile-img"
+                            onError={(e) => {
+                                e.target.src = defaultAvatar;
+                            }}
                         />
                     </Link>
                 </div>

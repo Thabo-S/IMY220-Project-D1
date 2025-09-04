@@ -1,19 +1,16 @@
 import React from "react";
 
 const TeamMembers = ({ project }) => {
-    // Get the creator
+    
     const creator = project.creator;
     
-    // Sample team members (excluding the creator to avoid duplicates)
     const sampleMembers = [
         { id: 2, name: "Sarah Coder", avatar: "/assets/images/avatars/sarah.png" },
         { id: 3, name: "Mike Programmer", avatar: "/assets/images/avatars/mike.png" }
     ];
     
-    // Filter out the creator from sample members if they exist there
     const filteredSampleMembers = sampleMembers.filter(member => member.id !== creator.id);
     
-    // Combine creator with filtered sample members
     const allMembers = [creator, ...filteredSampleMembers];
 
     return (

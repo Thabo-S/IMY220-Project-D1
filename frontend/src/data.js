@@ -1,9 +1,28 @@
+const profileImages = [
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Alexander",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Sawyer",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Luis",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Brian",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Kingston",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Sophia",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Ryker",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Caleb",
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Mason",
+];
+
+// Helper function to get a consistent avatar based on user ID
+const getAvatarById = (id) => {
+    const index = id % profileImages.length;
+    return profileImages[index];
+};
+
 const users = [
     {
         id: 1,
         name: "John Developer",
         email: "john@example.com",
-        avatar: "/assets/images/avatars/john.png",
+        avatar: getAvatarById(1),
         bio: "Full-stack developer with 5 years of experience",
         birthday: "1990-05-15",
         gender: "Male",
@@ -18,7 +37,7 @@ const users = [
         id: 2,
         name: "Sarah Coder",
         email: "sarah@example.com",
-        avatar: "/assets/images/avatars/sarah.png",
+        avatar: getAvatarById(2),
         bio: "Frontend specialist and UI enthusiast",
         birthday: "1992-11-22",
         gender: "Female",
@@ -33,7 +52,7 @@ const users = [
         id: 3,
         name: "Mike Programmer",
         email: "mike@example.com",
-        avatar: "/assets/images/avatars/mike.png",
+        avatar: getAvatarById(3),
         bio: "Backend developer and database expert",
         birthday: "1988-03-08",
         gender: "Male",
@@ -48,7 +67,7 @@ const users = [
         id: 4,
         name: "Thabo",
         email: "u24928209@tuks.co.za",
-        avatar: "/assets/images/avatars/thabo.png",
+        avatar: getAvatarById(4),
         bio: "Software engineering student and aspiring developer",
         birthday: "2000-08-20",
         gender: "Male",
@@ -265,7 +284,7 @@ const friends = [
     {
         id: 5,
         name: "Alex Tech",
-        avatar: "/assets/images/avatars/alex.png",
+        avatar: getAvatarById(5),
         bio: "Mobile developer and open source contributor",
         projectsCount: 9,
         followers: 127,
@@ -274,7 +293,7 @@ const friends = [
     {
         id: 6,
         name: "Taylor Code",
-        avatar: "/assets/images/avatars/taylor.png",
+        avatar: getAvatarById(6),
         bio: "DevOps engineer and cloud architect",
         projectsCount: 6,
         followers: 89,
